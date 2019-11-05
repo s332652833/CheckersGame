@@ -1,0 +1,28 @@
+package checker;
+
+import myBoard.Board;
+import java.awt.Color;
+import javax.swing.JFrame;
+
+/**
+ *
+ * @author S332652833
+ */
+public class Checker {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args){
+        JFrame board = new JFrame();
+        board.setSize(600,600);
+        board.getContentPane().add(new Board());
+        board.setLocationRelativeTo(null);
+        board.setBackground(Color.LIGHT_GRAY);
+        board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        board.setVisible(true);
+      
+ 
+    }  
+    
+}
