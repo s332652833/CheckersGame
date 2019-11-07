@@ -1,21 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mousemovement;
 
-/**
- *
- * @author S332613942
- */
-public class MouseMovement {
+import java.awt.*;  
+import java.awt.event.MouseEvent;  
+import java.awt.event.MouseMotionListener;  
+public class MouseMovement extends Frame implements MouseMotionListener{  
+    Label l;  
+    Color c=Color.BLUE;  
+    MouseMovement(){  
+    l=new Label();  
+    l.setBounds(20,40,100,20);  
+    add(l);  
+      
+    addMouseMotionListener(this);  
+      
+    setSize(4000,4000);  
+    setLayout(null);  
+    setVisible(true);  
+}  
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
+public void mouseClicked (MouseEvent e){
+    Graphics g=getGraphics();
+    g.setColor(Color.RED);
+    g.fillOval(e.getX(),e.getY(),20,20);
 }
+public void mouseMoved(MouseEvent e) {  
+    l.setText("X="+e.getX()+", Y="+e.getY());
+
+}  
+
+public void mouseDragged(MouseEvent e) {  
+    l.setText("X="+e.getX()+", Y="+e.getY());  
+    Graphics g=getGraphics();  
+    g.setColor(Color.WHITE); // Instead of making it white reset the board
+    g.fillRect(0,0,4000,4000);
+            
+    g.setColor(Color.RED);  
+    g.fillOval(e.getX(),e.getY(),40,40); 
+}  
+
+public static void main(String[] args) {  
+    new MouseMovement();  
+}  
+}  
