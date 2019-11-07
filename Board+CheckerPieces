@@ -1,0 +1,110 @@
+package practice;
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+
+/**
+ *
+ * @author S332652833
+ */
+public class Checkerboard extends JPanel{
+    
+    public void Red(){
+        
+    }
+    
+    public void paint(Graphics g){
+        
+        g.fillRect(100, 100, 400, 400);
+        for(int i = 100; i <= 400; i+=100){
+            for(int j = 100; j <= 400; j+=100){
+                g.clearRect(i, j, 50, 50);
+            }
+        }
+        
+        for(int i = 150; i <= 450; i+=100){
+            for(int j = 150; j <= 450; j+=100){
+                g.clearRect(i, j, 50, 50);
+            }
+        }
+
+        Ellipse2D red1 = new Ellipse2D.Double(150,100,50,50);
+        Ellipse2D red2 = new Ellipse2D.Double(250,100,50,50);
+        Ellipse2D red3 = new Ellipse2D.Double(350,100,50,50);
+        Ellipse2D red4 = new Ellipse2D.Double(450,100,50,50);
+        
+        Ellipse2D red5 = new Ellipse2D.Double(100,150,50,50);
+        Ellipse2D red6 = new Ellipse2D.Double(200,150,50,50);
+        Ellipse2D red7 = new Ellipse2D.Double(300,150,50,50);
+        Ellipse2D red8 = new Ellipse2D.Double(400,150,50,50);
+        
+        Ellipse2D red9 = new Ellipse2D.Double(150,200,50,50);
+        Ellipse2D red10 = new Ellipse2D.Double(250,200,50,50);
+        Ellipse2D red11 = new Ellipse2D.Double(350,200,50,50);
+        Ellipse2D red12 = new Ellipse2D.Double(450,200,50,50);
+
+        Ellipse2D blue1 = new Ellipse2D.Double(100,450,50,50);
+        Ellipse2D blue2 = new Ellipse2D.Double(200,450,50,50);
+        Ellipse2D blue3 = new Ellipse2D.Double(300,450,50,50);
+        Ellipse2D blue4 = new Ellipse2D.Double(400,450,50,50);
+        
+        Ellipse2D blue5 = new Ellipse2D.Double(150,400,50,50);
+        Ellipse2D blue6 = new Ellipse2D.Double(250,400,50,50);
+        Ellipse2D blue7 = new Ellipse2D.Double(350,400,50,50);
+        Ellipse2D blue8 = new Ellipse2D.Double(450,400,50,50);
+        
+        Ellipse2D blue9 = new Ellipse2D.Double(100,350,50,50);
+        Ellipse2D blue10 = new Ellipse2D.Double(200,350,50,50);
+        Ellipse2D blue11 = new Ellipse2D.Double(300,350,50,50);
+        Ellipse2D blue12 = new Ellipse2D.Double(400,350,50,50);
+        
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setPaint(Color.RED);
+        
+        g2.fill(red1);
+        g2.fill(red2);
+        g2.fill(red3);
+        g2.fill(red4);
+        g2.fill(red5);
+        g2.fill(red6);
+        g2.fill(red7);
+        g2.fill(red8);
+        g2.fill(red9);
+        g2.fill(red10);
+        g2.fill(red11);
+        g2.fill(red12);
+
+        g2.setPaint(Color.BLUE);
+        g2.fill(blue1);
+        g2.fill(blue2);
+        g2.fill(blue3);
+        g2.fill(blue4);        
+        g2.fill(blue5);
+        g2.fill(blue6);
+        g2.fill(blue7);
+        g2.fill(blue8);
+        g2.fill(blue9);
+        g2.fill(blue10);
+        g2.fill(blue11);
+        g2.fill(blue12);
+        
+        
+    
+    }
+    public static void main(String[] args){
+        JFrame frame = new JFrame();
+        frame.setSize(600,600);
+        frame.getContentPane().add(new Checkerboard());
+        frame.setLocationRelativeTo(null);
+        frame.setBackground(Color.LIGHT_GRAY);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }  
+}
+
+
