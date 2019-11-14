@@ -20,6 +20,7 @@ public class MouseMovement extends Frame implements MouseListener{
     public int yred[] = new int[12];
     public int xblue[] = new int[12];
     public int yblue[] = new int[12];
+    public int turn = 0;
     Label l;  
     Color c=Color.BLUE;  
     MouseMovement(){  
@@ -38,6 +39,23 @@ public class MouseMovement extends Frame implements MouseListener{
     
             
 }  
+    public void board(){
+        Graphics g=getGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(100, 100, 400, 400);
+        g.setColor(Color.BLACK);
+        for(int i = 150; i <= 450; i+=100){
+            for(int j = 100; j <= 400; j+=100){
+                g.fillRect(i, j, 50, 50);
+            }
+        }
+
+        for(int i = 100; i <= 400; i+=100){
+            for(int j = 150; j <= 450; j+=100){
+                g.fillRect(i, j, 50, 50);
+            }
+        }
+    }
     public void ResetPiece(){
        int count1 = 0;
        int count2 = 0;
@@ -138,23 +156,85 @@ public class MouseMovement extends Frame implements MouseListener{
         g2.fill(blue12); 
  
     }
-    
-    public void board(){
-       Graphics g=getGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(100, 100, 400, 400);
-        g.setColor(Color.WHITE);
-        for(int i = 100; i <= 400; i+=100){
-            for(int j = 100; j <= 400; j+=100){
-                g.fillRect(i, j, 50, 50);
+    public void findred(int x, int y) {
+        Graphics g=getGraphics() ; 
+        for (int i = 0; i<= 12; i++){
+            if (xred[i] == x && yred[i] == y) {
+                g.setColor (Color.YELLOW);
+                g.drawOval(xred[i]+1,yred[i]+1,48,48);                                 
+            }           
+            //DRAWS RECTANGLE ON OPEN SPOTS
+            if (xred[i]+50 == x+50 && yred[i] + 50 == y+50) {
+                g.drawRect(xred[i]+50,yred[i]+50,50,50);  
+            } else if(xred[i]-50 == x-50 && yred[i] + 50 == y+50) {
+                g.drawRect(xred[i]-50,yred[i]+50,50,50);  
+                
+            } else if(xblue[i]+50 == x+50 && yblue[i] + 50 == y+50) {
+                g.drawRect(xblue[i]+50,yblue[i]+50,50,50);
+            } else if(xblue[i]-50 == x-50 && yblue[i] + 50 == y+50) {
+                g.drawRect(xblue[i]+50,yblue[i]+50,50,50);  
             }
         }
+     }
 
-        for(int i = 150; i <= 450; i+=100){
-            for(int j = 150; j <= 450; j+=100){
-                g.fillRect(i, j, 50, 50);
+    public void findblue(int x, int y) {
+        Graphics g=getGraphics() ; 
+        for (int i = 0; i<= 12; i++){
+            if (xblue[i] == x && yblue[i] == y) {
+                    g.setColor (Color.YELLOW);
+                    g.drawOval(xblue[i]+1,yblue[i]+1,48,48);
             }
         }
+     }
+    
+    public void findpiece (int x, int y){ 
+        Graphics g=getGraphics() ; 
+        for(int i = 150; i <= 450; i+=100){
+            for(int j = 100; j <= 400; j+=100){
+                if (x >= i &&x<=i+50 && y >= j && y <=j+50 ) {
+                        findred(i,j); 
+                      
+            }
+        }
+        }
+    
+
+
+        for(int i = 100; i <= 400; i+=100){
+            for(int j = 150; j <= 450; j+=100){
+                if (x >= i && x<=i+50 && y >= j && y <=j+50 ) {
+                        findred(i,j);
+                        g.setColor(Color.YELLOW);
+                        g.drawRect(i-50,j+50,50,50);      
+                        g.drawRect(i+50,j+50,50,50);   
+                }
+        }
+    }
+    }
+    
+    public void check(int x, int y){
+         Graphics g=getGraphics() ; 
+        for(int i = 150; i <= 450; i+=100){
+            for(int j = 100; j <= 400; j+=100){
+                if (x >= i &&x<=i+50 && y >= j && y <=j+50 ) {
+                        
+                      
+            }
+        }
+        }
+    
+
+
+        for(int i = 100; i <= 400; i+=100){
+            for(int j = 150; j <= 450; j+=100){
+                if (x >= i && x<=i+50 && y >= j && y <=j+50 ) {
+                        findred(i,j);
+                        g.setColor(Color.YELLOW);
+                        g.drawRect(i-50,j+50,50,50);      
+                        g.drawRect(i+50,j+50,50,50);   
+                }
+        }
+    }
     }
     
     @Override
@@ -167,25 +247,15 @@ public class MouseMovement extends Frame implements MouseListener{
     public void mouseClicked(MouseEvent e) {}  
     public void mouseEntered(MouseEvent e) {}  
     public void mouseExited(MouseEvent e) {}  
-    public void mousePressed(MouseEvent e) {Graphics g=getGraphics();  
+    public void mousePressed(MouseEvent e) {
+        Graphics g=getGraphics();  
         l.setText("X="+e.getX()+", Y="+e.getY());
-        g.setColor(Color.BLUE);  
-        g.fillOval(e.getX(),e.getY(),30,30);  }  
+      } 
+    
     public void mouseReleased(MouseEvent e) {
-    if ((e.getX()-20) >= 75 &&e.getX()<=1250 && (e.getY()-20) >= 75 && e.getY() <=1250 ) {
-    Graphics g=getGraphics();
-    g.setColor (Color.RED);
-    g.fillOval(500,500,40,40);
-    //replace numbers with object locations in the array
-    //replace the print location with the object location
-    }  
-    else {
-        Graphics g=getGraphics();
-        g.setColor(Color.WHITE);
-        g.fillOval(500,500,40,40);
-        System.out.println("Failure");
-        repaint();
-    }
+        board();
+        print();
+        findpiece(e.getX(), e.getY());
     }
     
    public static void main(String[] args) {  
