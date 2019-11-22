@@ -1,0 +1,31 @@
+Planning - Andy, Arup, Mohamed
+
+Checkers:
+
+Everyone: Learn various components of graphics in java
+Andy - List of planning
+Arup will make UML
+Mo will make the pseudocode
+Andy will learn image processing
+Arup will create a board and how to properly spawn/update objects
+Mo will figure out movement
+Arup will implement win/lose/draw conditions
+Andy will test for bugs
+Mo will comment work
+
+
+RULES OF CHECKERS:
+Dark color goes first
+Pieces can only move diagonally
+The board is 8x8 squares, alternating with light and dark 
+Each team has 12 pieces, only placed on the dark squares
+Each piece starts out only able to move forward diagonally, but once it becomes a king by reaching the end of the board, it can move forward and backwards (only if the square is empty)
+When there is an enemy checker beside yours with its back “empty”, you can hop over it and remove the piece, hopping can be chained for as many times as possible
+When a piece is blocked in from all sides, it cannot move
+A player wins when the enemy team has either no available moves either by all its pieces being captured or all its pieces being blocked in
+A draw occurs when both teams have no available moves but still have pieces remaining
+
+SPECIAL CHANGE:
+No kings in this game
+First player to reach the other side of the board with the most amount of killed pawns win
+If the player kills all the opponent pawns he also wins
