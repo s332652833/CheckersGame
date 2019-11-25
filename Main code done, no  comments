@@ -1,0 +1,668 @@
+/*Program created by Arup, Andy, Mohamed
+ *2 Player Checker Game w/ our own variation
+ *Rules: Moving pieces work just like checkers however, there are no kings in the game. Instead, the first player to get their
+ piece to the end of the board wins. 
+ */
+package checkergame;
+
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.geom.Ellipse2D;
+import javax.swing.JFrame;
+
+/**
+ *
+ * @author S332652833
+ */
+public class CheckerGame extends Frame implements MouseListener {
+
+    public int xred[] = new int[12];
+    public int yred[] = new int[12];
+    public int xblue[] = new int[12];
+    public int yblue[] = new int[12];
+    public int turn = 1;
+    public int win=0;
+    public int move = 0;
+    public int move1, move2, move3, move4, move5, move6 = 0;
+    public int free1,free2,free3,free4=0;
+    public int xval,yval,count, count1, count2, redlive, bluelive;
+    public int change=0;
+
+    Label l;
+    Color c = Color.BLUE;
+
+    CheckerGame() {
+        l = new Label();
+        l.setBounds(20, 40, 100, 20);
+        add(l);
+
+        addMouseListener(this);
+
+        setLayout(null);
+        setTitle("2 Player Checkers");
+        setSize(600, 600);
+        setVisible(true);
+        setResizable(false);
+
+    }
+
+    public void paint(Graphics g) {
+        setBackground(Color.LIGHT_GRAY);
+        board();
+        ResetPiece();
+        print();
+    }
+    
+    public void mouseClicked(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {}   
+    public void mouseReleased(MouseEvent e) {
+        board();
+        print();
+        gameover();
+        if (change==0){
+            findpiece(e.getX(), e.getY());
+        } else if (change == 1 && turn == 1) {
+            moveblue(e.getX(), e.getY(), xval, yval);
+            board();
+            print();
+        } else if (change == 1 && turn == 2) {
+            movered(e.getX(), e.getY(), xval, yval);
+            board();
+            print();
+        }
+    }
+
+    public static void main(String[] args) {
+        new CheckerGame();
+
+
+    }
+
+    public void board() {
+        Graphics g = getGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(100, 100, 400, 400);
+        g.setColor(Color.BLACK);
+        for (int i = 150; i <= 450; i += 100) {
+            for (int j = 100; j <= 400; j += 100) {
+                g.fillRect(i, j, 50, 50);
+            }
+        }
+
+        for (int i = 100; i <= 400; i += 100) {
+            for (int j = 150; j <= 450; j += 100) {
+                g.fillRect(i, j, 50, 50);
+            }
+        }
+    }
+    
+    public void gameover(){
+        Graphics g = getGraphics();
+        if (bluelive == 0 || win==1) {
+            String msg = "Game Over BLUE WINS";
+            Font small = new Font("Helvetica", Font.BOLD, 40);
+            FontMetrics metr = getFontMetrics(small);
+            g.setColor(Color.white);
+            g.setFont(small);
+            g.drawString(msg, (600 - metr.stringWidth(msg)) / 2, 80);
+            change=3;
+        }
+        else if(redlive == 0 || win==2) {
+            String msg = "Game Over RED WINS";
+            Font small = new Font("Helvetica", Font.BOLD, 40);
+            FontMetrics metr = getFontMetrics(small);
+            g.setColor(Color.white);
+            g.setFont(small);
+            g.drawString(msg, (600 - metr.stringWidth(msg)) / 2, 80);
+            change=3;
+        }
+    }
+    
+    public void print() {
+        Graphics g = getGraphics();
+        Ellipse2D red1 = new Ellipse2D.Double(xred[0], yred[0], 50, 50);
+        Ellipse2D red2 = new Ellipse2D.Double(xred[1], yred[1], 50, 50);
+        Ellipse2D red3 = new Ellipse2D.Double(xred[2], yred[2], 50, 50);
+        Ellipse2D red4 = new Ellipse2D.Double(xred[3], yred[3], 50, 50);
+
+        Ellipse2D red5 = new Ellipse2D.Double(xred[4], yred[4], 50, 50);
+        Ellipse2D red6 = new Ellipse2D.Double(xred[5], yred[5], 50, 50);
+        Ellipse2D red7 = new Ellipse2D.Double(xred[6], yred[6], 50, 50);
+        Ellipse2D red8 = new Ellipse2D.Double(xred[7], yred[7], 50, 50);
+
+        Ellipse2D red9 = new Ellipse2D.Double(xred[8], yred[8], 50, 50);
+        Ellipse2D red10 = new Ellipse2D.Double(xred[9], yred[9], 50, 50);
+        Ellipse2D red11 = new Ellipse2D.Double(xred[10], yred[10], 50, 50);
+        Ellipse2D red12 = new Ellipse2D.Double(xred[11], yred[11], 50, 50);
+
+        Ellipse2D blue1 = new Ellipse2D.Double(xblue[0], yblue[0], 50, 50);
+        Ellipse2D blue2 = new Ellipse2D.Double(xblue[1], yblue[1], 50, 50);
+        Ellipse2D blue3 = new Ellipse2D.Double(xblue[2], yblue[2], 50, 50);
+        Ellipse2D blue4 = new Ellipse2D.Double(xblue[3], yblue[3], 50, 50);
+
+        Ellipse2D blue5 = new Ellipse2D.Double(xblue[4], yblue[4], 50, 50);
+        Ellipse2D blue6 = new Ellipse2D.Double(xblue[5], yblue[5], 50, 50);
+        Ellipse2D blue7 = new Ellipse2D.Double(xblue[6], yblue[6], 50, 50);
+        Ellipse2D blue8 = new Ellipse2D.Double(xblue[7], yblue[7], 50, 50);
+
+        Ellipse2D blue9 = new Ellipse2D.Double(xblue[8], yblue[8], 50, 50);
+        Ellipse2D blue10 = new Ellipse2D.Double(xblue[9], yblue[9], 50, 50);
+        Ellipse2D blue11 = new Ellipse2D.Double(xblue[10], yblue[10], 50, 50);
+        Ellipse2D blue12 = new Ellipse2D.Double(xblue[11], yblue[11], 50, 50);
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setPaint(Color.RED);
+        g2.fill(red1);
+        g2.fill(red2);
+        g2.fill(red3);
+        g2.fill(red4);
+        g2.fill(red5);
+        g2.fill(red6);
+        g2.fill(red7);
+        g2.fill(red8);
+        g2.fill(red9);
+        g2.fill(red10);
+        g2.fill(red11);
+        g2.fill(red12);
+
+        g2.setPaint(Color.BLUE);
+        g2.fill(blue1);
+        g2.fill(blue2);
+        g2.fill(blue3);
+        g2.fill(blue4);
+        g2.fill(blue5);
+        g2.fill(blue6);
+        g2.fill(blue7);
+        g2.fill(blue8);
+        g2.fill(blue9);
+        g2.fill(blue10);
+        g2.fill(blue11);
+        g2.fill(blue12);
+
+    }
+
+    public void ResetPiece() {
+        int count1 = 0;
+        int count2 = 0;
+        redlive = 12;
+        bluelive = 12;
+        for (int h = 0; h < 3; h++) {
+            //Red Piece starting x position
+            for (int ax = 100; ax < 500; ax += 100) {
+
+                if (h == 1) {
+                    xred[count1] = ax;
+                } else {
+                    xred[count1] = ax + 50;
+                }
+                count1++;
+            }
+            //Red Piece starting y position
+            for (int b = 0; b < 4; b++) {
+                yred[b] = 100;
+                yred[b + 4] = 150;
+                yred[b + 8] = 200;
+            }
+            //Blue Piece starting x position
+            for (int bx = 100; bx < 500; bx += 100) {
+                if (h == 1) {
+                    xblue[count2] = bx + 50;
+                } else {
+                    xblue[count2] = bx;
+                }
+                count2++;
+            }
+            //Blue Piece starting y position
+            for (int b = 0; b < 4; b++) {
+                yblue[b] = 350;
+                yblue[b + 4] = 400;
+                yblue[b + 8] = 450;
+            }
+        }
+
+    }
+
+    public void findpiece(int x, int y) {
+
+        Graphics g = getGraphics();        
+        for (int i = 150; i <= 450; i += 100) {
+            for (int j = 100; j <= 400; j += 100) {
+                if (x >= i && x <= i + 50 && y >= j && y <= j + 50) {
+                    switch (turn) {
+                        case 1:
+                            findblue(i, j);
+                            break;
+                        case 2:
+                            findred(i, j);
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+            }
+        }
+
+        for (int i = 100; i <= 400; i += 100) {
+            for (int j = 150; j <= 450; j += 100) {
+                if (x >= i && x <= i + 50 && y >= j && y <= j + 50) {
+                    switch (turn) {
+                        case 1:
+                            findblue(i, j);
+                            break;
+                        case 2:
+                            findred(i, j);
+                            break;
+                        default:
+                            break;
+                    }   
+                }
+            }
+        }
+    }
+
+    public void findblue(int x, int y) {
+        l.setText("BLUE Turn");
+        Graphics g = getGraphics();
+        for (int i = 0; i <= xblue.length; i++) {
+            if (xblue[i] == x && yblue[i] == y) {
+                g.setColor(Color.YELLOW);
+                g.drawOval(xblue[i] + 1, yblue[i] + 1, 48, 48);
+                
+                checkblue(xblue[i], yblue[i], i);
+                
+            }
+        }
+    }
+
+    public void findred(int x, int y) {
+        l.setText("RED Turn");
+        Graphics g = getGraphics();
+        for (int i = 0; i <= xred.length; i++) {
+            if (xred[i] == x && yred[i] == y) {
+                g.setColor(Color.YELLOW);
+                g.drawOval(xred[i] + 1, yred[i] + 1, 48, 48);
+
+                checkred(xred[i], yred[i], i);
+                
+            }
+        }
+
+    }
+    
+     public void checkblue(int x, int y, int num) {
+        Graphics g = getGraphics();
+        g.setColor(Color.YELLOW);
+        count=0;
+        count1 = 0;
+        count2 = 0;
+        xval=0;
+        yval=0;
+        move = 0;
+        move1 = 0;
+        move2 = 0;
+        move3 = 0;
+        move4 = 0;
+        move5 = 0;
+        move6 = 0;
+        change=1;
+        for (int a = 0; a <= xblue.length; a++) {
+            for (int k = a; k < xblue.length; k++) {
+                ////////////////////For blue left/right of piece////////////////////////////////////////////////
+                if ((xblue[a] == xblue[num] - 50) && (yblue[a] == yblue[num] - 50)) {
+                    move1 = 1;
+                }
+
+                if ((xblue[a] == xblue[num] + 50) && (yblue[a] == yblue[num] - 50)) {
+                    move2 = 1;
+                }
+
+                //////////////////////////red left right//////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////
+                if ((xred[a] == xblue[num] - 50) && (yred[a] == yblue[num] - 50)) {
+                    move3 = 1;
+                    count1 = a;
+                }
+                if ((xred[a] == xblue[num] + 50) && (yred[a] == yblue[num] - 50)) {
+                    move4 = 1;
+                    count2 = a;
+                }
+
+                ///////////////jumping over red////////////////////////////////////////////////////
+                if ((xred[a] == xblue[num] - 100) && (yred[a] == yblue[num] - 100)) {
+                    move5 = 1;
+                } else if ((xblue[a] == xblue[num] - 100) && (yblue[a] == yblue[num] - 100)) {
+                    move5 = 1;
+                }
+                if ((xred[a] == xblue[num] + 100) && (yred[a] == yblue[num] - 100)) {
+                    move6 = 1;
+                } else if ((xblue[a] == xblue[num] + 100) && (yblue[a] == yblue[num] - 100)) {
+                    move6 = 1;
+                }
+
+            }
+        }
+        if (move1 == 1 && move2 == 1) {
+            move = 3;
+        } else if (move3 == 1 && move4 == 1 && move5 == 1 && move6 == 1) {
+            move = 3;
+        } else if (move1 == 1 && move4 == 1 && move6 == 1) {
+            move = 3;
+        } else if (move2 == 1 && move3 == 1 && move5 == 1) {
+            move = 3;
+        } else if (move3 == 1 && move4 == 1 && move5 == 1) {
+            move = 5;
+        } else if (move3 == 1 && move4 == 1 && move6 == 1) {
+            move = 4;
+        } else if (move1 == 1 && move4 == 1) {
+            move = 5;
+        } else if (move2 == 1 && move3 == 1) {
+            move = 4;
+        } else if (move3 == 1 && move5 == 1) {
+            move = 2;
+        } else if (move4 == 1 && move6 == 1) {
+            move = 1;
+        } else if (move3 == 1 && move4 == 1) {
+            //Needs options
+            move = 4;
+        } else if (move1 == 1) {
+            move = 2;
+        } else if (move2 == 1) {
+            move = 1;
+        } else if (move3 == 1) {
+            move = 4;
+        } else if (move4 == 1) {
+            move = 5;
+        } 
+            /////////////////////////////////////////////////
+
+        if ((xblue[num] - 50 < 100) && move == 1) {
+            move = 3;
+        } else if ((xblue[num] + 50 > 450) && move == 2) {
+            move = 3;
+        } else if ((xblue[num] - 100 < 100) && move == 4) {
+            move = 3;
+        } else if ((xblue[num] + 100 > 450) && move == 5) {
+            move = 3;
+        }   else if ((xblue[num] - 50 < 100) && move == 0) {
+            move = 2;
+        } else if ((xblue[num] + 50 > 450) && move == 0) {
+            move = 1;       
+        }
+        
+        if ((yblue[num] - 100 < 100) && move == 4) {
+            move = 3;
+        }else if ((yblue[num] - 100 < 100) && move == 5) {
+            move = 3;
+        }else if ((yblue[num] - 50 < 100) && move == 0) {
+            move = 3;
+        }else if ((yblue[num] - 50 < 100) && move == 1) {
+            move = 3;
+        }else if ((yblue[num] - 50 < 100) && move == 2) {
+            move = 3;
+        }
+        
+        if (move == 1)  {
+            g.fillOval(x-35, y-35, 20, 20);
+        } else if (move == 2) {
+            g.fillOval(x+65, y-35, 20, 20);
+        } else if (move == 3) {
+        } else if (move == 4) {
+            g.fillOval(x-85, y-85, 20, 20);
+        } else if (move == 5) {
+            g.fillOval(x+115, y-85, 20, 20);
+        } else {
+            g.fillOval(x-35, y-35, 20, 20);
+            g.fillOval(x+65, y-35, 20, 20);
+        }
+        
+        count=num;
+        xval=x;
+        yval=y;
+     }
+/////////////////////////////////////////////////////
+    public void moveblue(int mousex, int mousey, int x, int y) {
+        
+        if (move == 0) {
+            if ((mousex >= x - 50 && mousex <= x && mousey >= y - 50 && mousey <= y)) {
+                xblue[count] = x - 50;
+                yblue[count] = y - 50;
+                turn = 2;
+            } else if ((mousex >= x + 50 && mousex <= x + 100 && mousey >= y - 50 && mousey <= y)) {
+                xblue[count] = x + 50;
+                yblue[count] = y - 50;
+                turn = 2;
+            }
+        } else if (move == 1) {
+            if ((mousex >= x - 50 && mousex <= x && mousey >= y - 50 && mousey <= y )) {
+                xblue[count] = x - 50;
+                yblue[count] = y - 50;
+                turn = 2;
+            }
+        } else if (move == 2) {
+            if ((mousex >= x + 50 && mousex <= x + 100 && mousey >= y - 50 && mousey <= y )) {
+                xblue[count] = x + 50;
+                yblue[count] = y - 50;
+                turn = 2;
+            }
+        } else if (move == 3) {
+            //do nothing
+        } else if (move == 4) {
+            if ((mousex >= x - 100 && mousex <= x - 50 && mousey >= y - 100 && mousey <= y - 50)) {
+                xblue[count] = x - 100;
+                yblue[count] = y - 100;
+                xred[count1] = -100;
+                yred[count1] = -100;
+                redlive--;
+                turn = 2;
+            }
+        } else if (move == 5) {
+            if ((mousex >= x + 100 && mousex <= x + 150 && mousey >= y - 100 && mousey <= y - 50)) {
+                xblue[count] = x + 100;
+                yblue[count] = y - 100;
+                xred[count2] = -100;
+                yred[count2] = -100;
+                redlive--;
+                turn = 2;
+            }
+        }
+
+        change = 0;
+        if (yblue[count] == 100) {
+            win = 1;
+        }
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void checkred(int x, int y, int num) {
+        Graphics g = getGraphics();
+        g.setColor(Color.YELLOW);
+        count1 = 0;
+        count2 = 0;
+        count=0;
+        xval=0;
+        yval=0;
+        move = 0;
+        move1 = 0;
+        move2 = 0;
+        move3 = 0;
+        move4 = 0;
+        move5 = 0;
+        move6 = 0;
+        change=1;
+        for (int a = 0; a <= xred.length; a++) {
+            for (int k = a; k < xred.length; k++) {
+                ////////////////////For red left/right of piece////////////////////////////////////////////////
+                if ((xred[a] == xred[num] - 50) && (yred[a] == yred[num] + 50)) {
+                    move1 = 1;
+                }
+
+                if ((xred[a] == xred[num] + 50) && (yred[a] == yred[num] + 50)) {
+                    move2 = 1;
+                }
+
+                //////////////////////////blue left right//////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////
+                if ((xblue[a] == xred[num] - 50) && (yblue[a] == yred[num] + 50)) {
+                    move3 = 1;
+                    count1 = a;
+                }
+                if ((xblue[a] == xred[num] + 50) && (yblue[a] == yred[num] + 50)) {
+                    move4 = 1;
+                    count2 = a;
+                }
+
+                ///////////////jumping over blue////////////////////////////////////////////////////
+                if ((xblue[a] == xred[num] - 100) && (yblue[a] == yred[num] + 100)) {
+                    move5 = 1;
+                } else if ((xred[a] == xred[num] - 100) && (yred[a] == yred[num] + 100)) {
+                    move5 = 1;
+                }
+                if ((xblue[a] == xred[num] + 100) && (yblue[a] == yred[num] + 100)) {
+                    move6 = 1;
+                } else if ((xred[a] == xred[num] + 100) && (yred[a] == yred[num] + 100)) {
+                    move6 = 1;
+                }
+
+            }
+        }
+        if (move1 == 1 && move2 == 1) {
+            move = 3;
+        } else if (move3 == 1 && move4 == 1 && move5 == 1 && move6 == 1) {
+            move = 3;
+        } else if (move1 == 1 && move4 == 1 && move6 == 1) {
+            move = 3;
+        } else if (move2 == 1 && move3 == 1 && move5 == 1) {
+            move = 3;
+        } else if (move3 == 1 && move4 == 1 && move5 == 1) {
+            move = 5;
+        } else if (move3 == 1 && move4 == 1 && move6 == 1) {
+            move = 4;
+        } else if (move1 == 1 && move4 == 1) {
+            move = 5;
+        } else if (move2 == 1 && move3 == 1) {
+            move = 4;
+        } else if (move3 == 1 && move5 == 1) {
+            move = 2;
+        } else if (move4 == 1 && move6 == 1) {
+            move = 1;
+        } else if (move3 == 1 && move4 == 1) {
+            //Needs options
+            move = 4;
+        } else if (move1 == 1) {
+            move = 2;
+        } else if (move2 == 1) {
+            move = 1;
+        } else if (move3 == 1) {
+            move = 4;
+        } else if (move4 == 1) {
+            move = 5;
+        }
+        
+        if ((xred[num] - 50 < 100) && move == 1) {
+            move = 3;
+        } else if ((xred[num] + 50 > 450) && move == 2) {
+            move = 3;
+        } else if ((xred[num] - 100 < 100) && move == 4) {
+            move = 3;
+        } else if ((xred[num] + 100 > 450) && move == 5) {
+            move = 3;
+        }else if ((xred[num] - 50 < 100) && move == 0) {
+            move = 2;
+        } else if ((xred[num] + 50 > 450) && move == 0) {
+            move = 1;
+        } 
+        
+        
+        if ((yred[num] + 100 > 450) && move == 4) {
+            move = 3;
+        } else if ((yred[num] + 100 > 450) && move == 5) {
+            move = 3;
+        }else if ((yred[num] + 50 > 450) && move == 0) {
+            move = 3;
+        } else if ((yred[num] + 50 > 450) && move == 1) {
+            move = 3;
+        } else if ((yred[num] + 50 > 450) && move == 2) {
+            move = 3;
+        }
+        
+        if (move == 1)  {
+            g.fillOval(x-35, y+65, 20, 20);
+        } else if (move == 2) {
+            g.fillOval(x+65, y+65, 20, 20);
+        } else if (move == 3) {
+        } else if (move == 4) {
+            g.fillOval(x-85, y+115, 20, 20);
+        } else if (move == 5) {
+            g.fillOval(x+115, y+115, 20, 20);
+        } else {
+            g.fillOval(x-35, y+65, 20, 20);
+            g.fillOval(x+65, y+65, 20, 20);
+        }
+        count=num;
+        xval=x;
+        yval=y;
+                
+    }
+        /////////////////////////////////////////////////MAKE THE WIN CONDITIONS A SEPERATE METHOD
+        /////////////////////////////////////////////////
+    public void movered(int mousex, int mousey, int x, int y ){  
+      
+        if (move == 0) {
+            if ((mousex >= x - 50 && mousex <= x && mousey >= y + 50 && mousey <= y + 100)) {
+                xred[count] = x - 50;
+                yred[count] = y + 50;
+                turn = 1;               
+            } else if ((mousex >= x + 50 && mousex <= x + 100 && mousey >= y + 50 && mousey <= y + 100)) {
+                xred[count] = x + 50;
+                yred[count] = y + 50;
+                turn = 1;
+            }
+        } else if (move == 1) {
+            if ((mousex >= x - 50 && mousex <= x && mousey >= y + 50 && mousey <= y + 100)) {
+                xred[count] = x - 50;
+                yred[count] = y + 50;
+                turn = 1;
+            }
+        } else if (move == 2) {
+            if ((mousex >= x + 50 && mousex <= x + 100 && mousey >= y + 50 && mousey <= y + 100)) {
+                xred[count] = x + 50;
+                yred[count] = y + 50;
+                turn = 1;
+            }
+        } else if (move == 3) {
+            //do nothing
+        } else if (move == 4) {
+            if ((mousex >= x - 100 && mousex <= x - 50 && mousey >= y + 100 && mousey <= y + 150)) {
+                xred[count] = x - 100;
+                yred[count] = y + 100;
+                xblue[count1] = -100;
+                yblue[count1] = -100;
+                bluelive--;
+                turn = 1;
+            }
+        } else if (move == 5) {
+            if ((mousex >= x + 100 && mousex <= x + 150 && mousey >= y + 100 && mousey <= y + 150)) {
+                xred[count] = x + 100;
+                yred[count] = y + 100;
+                xblue[count2] = -100;
+                yblue[count2] = -100;
+                bluelive--;
+                turn = 1;
+            }
+        }
+        
+        change = 0;
+        if (yred[count] == 450) {
+            win = 2;
+        }
+    }
+}
