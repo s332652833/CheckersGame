@@ -1,0 +1,83 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication12;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import java.awt.*;
+import java.awt.Label;
+import java.awt.event.MouseEvent;  
+import java.awt.event.MouseListener;  
+import java.awt.geom.Ellipse2D;
+
+/**
+ *
+ * @author S332686393
+ */
+public class JavaApplication12 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic hmport java.awt.BorderLayout{
+
+    JFrame f = new JFrame("A JFrame");
+    f.setSize(600, 600);
+    f.setLocation(300,200);
+    final JLabel label = new JLabel("Welcome to 2 Player");
+    label.setPreferredSize(new Dimension(10, 60));
+    label.setLocation(60,-30);
+    f.getContentPane().add(BorderLayout.CENTER, label);
+    label.setSize(700,500);
+    label.setFont(new Font("Serif", Font.PLAIN, 56));
+    final JLabel label2 = new JLabel("Checkers by Arup, Andy, and Mo");
+    label2.setPreferredSize(new Dimension(10, 60));
+    label2.setLocation(30,20);
+    f.getContentPane().add(BorderLayout.CENTER, label2);
+    label2.setSize(700,500);
+    label2.setFont(new Font("Serif", Font.PLAIN, 40));
+    final JLabel label3 = new JLabel("");
+    f.getContentPane().add(BorderLayout.CENTER, label3);
+    final JButton button = new JButton("Click Here to Play");
+    f.getContentPane().add(BorderLayout.SOUTH, button);
+    button.addActionListener(new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            
+            
+            //java.awt.EventQueue.invokeLater(new Runnable () {}); 
+                    
+        //public void run() {}
+          //public void jButton1ActionPerformed(java.awt.event.ActionEvent evt){
+          CheckerGame MM = new CheckerGame();
+          MM.setVisible(true);
+          f.setVisible(false);
+          // textArea.append("Button was clicked\n");
+
+        }
+    });
+   
+
+    f.setVisible(true);
+
+        }
+       // });
+            //}
+}
+
+    
+            
+           
+    
+
