@@ -27,5 +27,6 @@ A draw occurs when both teams have no available moves but still have pieces rema
 
 SPECIAL CHANGE:
 No kings in this game
-First player to reach the other side of the board with the most amount of killed pawns win
+First player to reach the other side of the board wins
+No double jump
 If the player kills all the opponent pawns he also wins
